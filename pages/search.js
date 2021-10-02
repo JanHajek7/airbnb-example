@@ -3,11 +3,11 @@ import Head from "next/head";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import InfoCard from "../components/InfoCard";
 import { useRouter } from "next/dist/client/router";
 import { format } from "date-fns";
 
 export default function Search({ searchResults }) {
-  console.log(searchResults);
   const router = useRouter();
   const { endDate, location, numberOfQuests, startDate } = router.query;
 
@@ -15,7 +15,6 @@ export default function Search({ searchResults }) {
   const formattedEndDate = format(new Date(endDate || null), "dd.MM.yyyy");
   const range = `${formattedStartDate} - ${formattedEndDate}`;
 
-  console.log(router.query);
   return (
     <div className="">
       <Head>
@@ -45,6 +44,12 @@ export default function Search({ searchResults }) {
             <p className="card-item">Rooms and Beds</p>
             <p className="card-item">More filters</p>
           </div>
+
+          {searchResults?.map((item, index) => (
+            <div key={index}>
+              <InfoCard props={item} />
+            </div>
+          ))}
         </section>
       </main>
 
